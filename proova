@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>فحص النظام</title>
+  <style>
+    body {
+      background-color: white;
+      text-align: center;
+      font-family: Arial;
+      padding-top: 100px;
+      transition: all 0.5s;
+    }
+
+    #startBtn {
+      padding: 15px 30px;
+      font-size: 20px;
+      background-color: green;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    #warning {
+      color: red;
+      font-size: 24px;
+      margin-top: 50px;
+      display: none;
+    }
+
+    .shake {
+      animation: shake 0.2s infinite;
+    }
+
+    @keyframes shake {
+      0% { transform: translate(1px, 1px); }
+      25% { transform: translate(-1px, -2px); }
+      50% { transform: translate(-3px, 0px); }
+      75% { transform: translate(3px, 2px); }
+      100% { transform: translate(1px, -1px); }
+    }
+
+    #errorBox {
+      display: none;
+      background-color: black;
+      color: lime;
+      font-family: monospace;
+      padding: 20px;
+      margin-top: 30px;
+      height: 200px;
+      overflow: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>اضغط الزر لفحص النظام</h2>
+  <button id="startBtn">ابدأ الفحص</button>
+
+  <div id="warning">⚠️ جاري اختراق النظام...</div>
+  <div id="errorBox"></div>
+
+  <audio id="scarySound" src="https://www.soundjay.com/button/beep-10.mp3"></audio>
+
+  <script>
+    const btn = document.getElementById("startBtn");
+    const body = document.body;
+    const warning = document.getElementById("warning");
+    const errorBox = document.getElementById("errorBox");
+    const sound = document.getElementById("scarySound");
+
+    const fakeErrors = [
+      "[ERROR] System Breach Detected!",
+      "[WARNING] Accessing protected memory...",
+      "[!] IP Address Exposed!",
+      "Injecting reverse shell...",
+      "Uploading user data...",
+      "Encrypting local disk...",
+      "Sending data to dark web...",
+      "System lockdown initiated.",
+      "Shutdown command issued!"
+    ];
+
+    btn.onclick = function () {
+      sound.play();
+      body.style.backgroundColor = "black";
+      body.style.color = "red";
+      warning.style.display = "block";
+      body.classList.add("shake");
+      btn.style.display = "none";
+      errorBox.style.display = "block";
+
+      let index = 0;
+      const interval = setInterval(() => {
+        if (index < fakeErrors.length) {
+          errorBox.innerHTML += fakeErrors[index] + "<br>";
+          index++;
+        } else {
+          clearInterval(interval);
+        }
+      }, 1000);
+    };
+  </script>
+</body>
+</html>
